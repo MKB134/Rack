@@ -19,9 +19,8 @@ class App
   end
 
   def return_time(formatter)
-    response(200, formatter.format_time + "\n")
+    response(200, formatter.response_time + "\n")
   end
-
 
   def invalid_format(errors)
     response(400, "Unknown time format #{errors}\n")

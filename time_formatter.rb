@@ -21,14 +21,15 @@ class TimeFormatter
     invalid_args.empty?
   end
 
-  def call
-    Time.now.strftime(@valid.join("-"))
+  def response_time
+    Time.now.strftime(@valid.join('-'))
   end
+
 
   def format_time
     @requested_format.each do |format|
-      if VALID_FORMAT[format]
-        @valid << VALID_FORMAT[format]
+      if VALID_FORMAT[format.to_sym]
+        @valid << VALID_FORMAT[format.to_sym]
       else
         @invalid_args << format
       end
