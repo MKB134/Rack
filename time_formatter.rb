@@ -13,21 +13,25 @@ class TimeFormatter
   def initialize(format)
     @requested_format = format.split(',')
     @invalid_args = []
-    validate!
+    @valid = []
+    format_time
   end
 
   def valid?
     invalid_args.empty?
   end
 
-  def format_time
-    directive = requested_format.map { |f| VALID_FORMAT[f.to_sym] }
-    Time.now.strftime(directive.join('-'))
+  def call
+    Time.now.strftime(@valid.join("-"))
   end
 
-  private
-
-  def validate!
-    @invalid_args = requested_format.reject { |f| VALID_FORMAT.key?(f.to_sym) }
+  def format_time
+    @requested_format.each do |format|
+      if VALID_FORMAT[format]
+        @valid << VALID_FORMAT[format]
+      else
+        @invalid_args << format
+      end
+    end
   end
 end
